@@ -1,25 +1,22 @@
 import React from 'react';
-import logo from './logo.svg';
+import { Container } from 'react-bootstrap';
+import { Footer } from './Footer';
+import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <Container className="app-container">
+      <header>
+        <h1 className="mt-4 mb-4">Fast Explorer</h1>
       </header>
-    </div>
+
+      <main>
+        <p>Todo (a lot 😅...)</p>
+      </main>
+
+      <Footer url="fastexplorer-js" />
+    </Container>
   );
 }
 
