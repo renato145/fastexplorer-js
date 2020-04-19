@@ -2,6 +2,7 @@ import React from 'react';
 import { Container } from 'react-bootstrap';
 import { Footer } from './Footer';
 import { useSocket } from './useSocket';
+import { SocketFail } from './SocketFail';
 import { GraphLayout } from './GraphLayout';
 import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
@@ -22,12 +23,13 @@ function App() {
       </header>
 
       <main>
-        <p>Work in progress...</p>
-        {data && (
+        {data ? (
           <GraphLayout
             nodes={data.nodes}
             links={data.links}
           />
+        ) : (
+          <SocketFail />
         )}
       </main>
 
