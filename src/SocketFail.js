@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert } from 'react-bootstrap';
+import { Alert, Button } from 'react-bootstrap';
 
 const reload = () => window.location.reload(false);
 
@@ -15,10 +15,10 @@ export const SocketFail = () => {
         </p>
         <p>
           Once you launch the server,{' '}
-          <a href="#top" variant="link" onClick={reload}>
-            refresh{' '}
-          </a>
-          this page.
+          <Button variant="info" size="sm" onClick={reload}>
+            refresh
+          </Button>
+          {' '}this page.
         </p>
       </Alert>
     </>

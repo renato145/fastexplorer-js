@@ -4,6 +4,7 @@ import { Footer } from './Footer';
 import { useSocket } from './useSocket';
 import { SocketFail } from './SocketFail';
 import { GraphLayout } from './GraphLayout';
+import { TreeLayout } from './treestructure/TreeLayout';
 import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
 
@@ -28,6 +29,7 @@ function App() {
             nodes={data.nodes}
             links={data.links}
           />
+          // <TreeLayout data={data}/>
         ) : (
           <SocketFail />
         )}

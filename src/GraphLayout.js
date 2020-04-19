@@ -121,7 +121,7 @@ export const GraphLayout = ({ nodes, links }) => {
   const simulation = useMemo(() => {
     return (
       forceSimulation()
-        .force('links', forceLink().distance(0).strength(1))
+        .force('links', forceLink().distance(100))
         .force('charge', forceManyBody().strength(-50))
         .force('collide', forceCollide())
         .force('center', forceCenter())
