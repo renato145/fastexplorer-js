@@ -26,7 +26,7 @@ export const useSocket = ({ uri }) => {
           // closeMessage = ` (${msg.msg}).`;
           break;
         case 'invalid_event':
-          console.log(`Event not accepted by server: ${msg.event}.`)
+          console.log(`Event not accepted by server: ${msg.msg}.`)
           break;
         default:
           console.log(`Invalid event: ${msg.event}.`);
