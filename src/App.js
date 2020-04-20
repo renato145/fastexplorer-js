@@ -1,21 +1,16 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
 import { Footer } from './Footer';
-import { useSocket } from './useSocket';
-import { SocketFail } from './SocketFail';
-import { GraphLayout } from './GraphLayout';
+import { useSocket } from './socket/useSocket';
+import { SocketFail } from './socket/SocketFail';
 import { TreeLayout } from './treestructure/TreeLayout';
 import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
 
 const uri = 'ws://localhost:8000/ws';
 
-// TODO
-// https://observablehq.com/@d3/collapsible-tree?collection=@d3/d3-hierarchy -> instead of force sim
-
 function App() {
   const { data } = useSocket({ uri });
-  console.log(data);
 
   return (
     <Container className="app-container">
@@ -25,11 +20,7 @@ function App() {
 
       <main>
         {data ? (
-          <GraphLayout
-            nodes={data.nodes}
-            links={data.links}
-          />
-          // <TreeLayout data={data}/>
+          <TreeLayout data={data}/>
         ) : (
           <SocketFail />
         )}
