@@ -6,23 +6,27 @@ import { useMemo, useState } from 'react';
 
 export const useSocket = ({ uri }) => {
   const [data, setData] = useState();
+  const [status, setStatus] = useState('waiting');
   const socket = useMemo(() => {
     const socket = new WebSocket(uri);
 
     socket.onopen = () => {
       console.log('socket connected.');
+      setStatus('connected')
       socket.send(JSON.stringify({ client: 'web_client' }));
     };
 
     socket.onmessage = (event) => {
       const msg = JSON.parse(event.data);
-      console.log(`socket server event: ${msg.event}`);
       switch (msg.event) {
         case 'representation_data':
           setData(JSON.parse(msg.msg));
           break;
         case 'close':
           // closeMessage = ` (${msg.msg}).`;
+          break;
+        case 'invalid_event':
+          console.log(`Event not accepted by server: ${msg.event}.`)
           break;
         default:
           console.log(`Invalid event: ${msg.event}.`);
@@ -31,10 +35,11 @@ export const useSocket = ({ uri }) => {
 
     socket.onclose = () => {
       console.log('socket closed.');
+      setStatus('disconnected');
     };
 
     return socket;
   }, [uri]);
 
-  return { data, socket };
+  return { data, socket, status };
 };
