@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import { reducer } from './store/reducer'
-import { Provider } from 'react-redux'
-import { createStore, applyMiddleware} from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
 import createSagaMiddleWare from 'redux-saga';
-import { rootSaga} from './sagas/saga'
+import { rootReducer } from './reducers/rootReducer';
+import { rootSaga } from './sagas/saga';
 
 // ReactDOM.render(
 //   <React.StrictMode>
@@ -15,7 +15,7 @@ import { rootSaga} from './sagas/saga'
 // );
 
 const sagaMiddleWare = createSagaMiddleWare();
-const store = createStore(reducer, applyMiddleware(sagaMiddleWare));
+const store = createStore(rootReducer, applyMiddleware(sagaMiddleWare));
 sagaMiddleWare.run(rootSaga);
 
 ReactDOM.render(
