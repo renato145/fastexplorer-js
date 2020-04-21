@@ -2,6 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 
 let ii = 0;
 
+export const prepareSocket = ({text}) => ({ payload: { text, ii: ++ii}});
+
 const socketSlice = createSlice({
   name: 'socket',
   initialState: {
@@ -15,9 +17,7 @@ const socketSlice = createSlice({
         state.i++;
         state.msg = `Event received: ${text} (${state.i}) (${ii})`;
       },
-      prepare({text}) {
-        return { payload: { text, ii: ++ii}};
-      }
+      prepare: prepareSocket
     },
   },
 });
