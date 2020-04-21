@@ -15,7 +15,7 @@ const socketSlice = createSlice({
         state.i++;
         state.msg = `Event received: ${text} (${state.i}) (${ii})`;
       },
-      prepare(text) {
+      prepare({text}) {
         return { payload: { text, ii: ++ii}};
       }
     },
