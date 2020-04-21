@@ -1,18 +1,17 @@
 import { useMemo, useState } from 'react';
+import { connect } from 'react-redux';
+import { socketConnected } from '../reducers/socket';
 
-// TODO:
-// Reconnect socket
-// Use redux to manage data
+const mapDispatch = { socketConnected };
 
-export const useSocket = ({ uri }) => {
+const useComponent = ({ uri, socketConnected }) => {
   const [data, setData] = useState();
-  const [status, setStatus] = useState('waiting');
   const socket = useMemo(() => {
     const socket = new WebSocket(uri);
 
     socket.onopen = () => {
       console.log('socket connected.');
-      setStatus('connected')
+      // socketConnected()
       socket.send(JSON.stringify({ client: 'web_client' }));
     };
 
@@ -35,11 +34,14 @@ export const useSocket = ({ uri }) => {
 
     socket.onclose = () => {
       console.log('socket closed.');
-      setStatus('disconnected');
+      // setStatus('disconnected');
     };
 
     return socket;
-  }, [uri]);
+  }, [uri, socketConnected]);
 
-  return { data, socket, status };
+  return { data, socket };
 };
+
+// export const useSocket = connect(null, mapDispatch)(useComponent);
+export const useSocket = useComponent;

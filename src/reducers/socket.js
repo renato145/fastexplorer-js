@@ -1,26 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-let ii = 0;
-
-export const prepareSocket = ({text}) => ({ payload: { text, ii: ++ii}});
-
 const socketSlice = createSlice({
   name: 'socket',
   initialState: {
-    msg: '------',
-    i: 0,
+    status: 'waiting'
   },
   reducers: {
-    test_rtx: {
-      reducer(state, action) {
-        const { text, ii } = action.payload;
-        state.i++;
-        state.msg = `Event received: ${text} (${state.i}) (${ii})`;
-      },
-      prepare: prepareSocket
-    },
+    socketConnected(state, action) {
+      state.status = 'connected'; 
+    }
   },
 });
 
-export const { test_rtx } = socketSlice.actions;
+export const { socketConnected } = socketSlice.actions;
 export const socket = socketSlice.reducer;

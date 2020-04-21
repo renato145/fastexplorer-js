@@ -12,7 +12,7 @@ import { SocketStatus } from './socket/SocketStatus';
 const uri = 'ws://localhost:8000/ws';
 
 function App() {
-  const { data, status, socket } = useSocket({ uri });
+  const { data, socket } = useSocket({ uri });
 
   return (
     <Container className="app-container" fluid="xl">
@@ -23,7 +23,7 @@ function App() {
       <main>
         <Row>
           <Col>
-            <SocketStatus status={status} />
+            <SocketStatus />
           </Col>
         </Row>
         <Row className="justify-content-md-center">
