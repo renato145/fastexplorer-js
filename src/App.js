@@ -24,6 +24,7 @@ function App() {
         <Row>
           <Col>
             <SocketStatus status={status} />
+            <SocketStatus status={status} />
           </Col>
         </Row>
         <Row className="justify-content-md-center">

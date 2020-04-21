@@ -1,14 +1,17 @@
 import React from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 import { Button } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { test_rtx } from '../reducers/socket';
 
-const Component = ({ status, msg, onTestSaga }) => {
+const mapDispatch = {test_rtx};
+console.log(mapDispatch);
+
+const Component = ({ status, msg, test_rtx }) => {
   return (
     <div>
       <p>Socket status: {status}</p>
       <p>{msg}</p>
-      <Button onClick={onTestSaga}>click me</Button>
+      <Button onClick={() => test_rtx({text: 'ads'})}>click me</Button>
     </div>
   );
 };
@@ -19,13 +22,13 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispachToProps = (dispatch) => {
-  return {
-    onTestSaga: () => dispatch({ type: 'TEST_SAGA', value: ' YAY!!' }),
-  };
-};
+// const mapDispachToProps = (dispatch) => {
+//   return {
+//     onTestSaga: () => dispatch({ type: test_rtx.type, payload: {text: ' YAY!!'} }),
+//   };
+// };
 
 export const SocketStatus = connect(
   mapStateToProps,
-  mapDispachToProps
+  mapDispatch
 )(Component);
