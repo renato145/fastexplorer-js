@@ -6,7 +6,6 @@ import {
   put,
   takeLatest,
   fork,
-  delay,
 } from 'redux-saga/effects';
 import {
   socketConnected,
