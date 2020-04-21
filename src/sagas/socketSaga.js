@@ -1,15 +1,28 @@
 import { eventChannel, END } from 'redux-saga';
-import { call, take, put } from 'redux-saga/effects';
-import { socketConnected, socketClosed, socketReceiveData } from '../reducers/socketReducer';
+import {
+  all,
+  call,
+  take,
+  put,
+  takeLatest,
+  fork,
+  delay,
+} from 'redux-saga/effects';
+import {
+  socketConnected,
+  socketClosed,
+  socketReceiveData,
+} from '../reducers/socketReducer';
+import { createAction } from '@reduxjs/toolkit';
 
 const uri = 'ws://localhost:8000/ws';
 
-function initWebSocket() {
-  return eventChannel((emit) => {
-    const socket = new WebSocket(uri);
+export const get_input = createAction('GET_INPUT');
 
+function initWebSocket(socket) {
+  return eventChannel((emit) => {
     socket.onopen = () => {
-      emit({type: socketConnected.type});
+      emit({ type: socketConnected.type });
       console.log('WebSocket connected.');
       socket.send(JSON.stringify({ client: 'web_client' }));
     };
@@ -37,7 +50,7 @@ function initWebSocket() {
 
     socket.onclose = () => {
       console.log('WebSocket closed.');
-      emit({type: socketClosed.type});
+      emit({ type: socketClosed.type });
       emit(END);
       // setStatus('disconnected');
     };
@@ -50,9 +63,15 @@ function initWebSocket() {
   });
 }
 
-export function* watchSocket() {
-  const socketChannel = yield call(initWebSocket);
+function* getInput(socket) {
+  yield socket.send(JSON.stringify({event: 'load_input'}));
+}
 
+function* watchClient(socket) {
+  yield all([takeLatest(get_input, getInput, socket)]);
+}
+
+function* watchServer(socketChannel) {
   while (true) {
     try {
       const payload = yield take(socketChannel);
@@ -61,4 +80,11 @@ export function* watchSocket() {
       console.error(err);
     }
   }
+}
+
+export function* watchSocket() {
+  const socket = new WebSocket(uri);
+  const socketChannel = yield call(initWebSocket, socket);
+  yield fork(watchClient, socket);
+  yield fork(watchServer, socketChannel);
 }
