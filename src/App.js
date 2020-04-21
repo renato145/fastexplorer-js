@@ -1,7 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Container, Row, Col } from 'react-bootstrap';
 import { Footer } from './Footer';
-import { useSocket } from './socket/useSocket';
 import { SocketFail } from './socket/SocketFail';
 import { TreeLayout } from './treestructure/TreeLayout';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -9,11 +9,7 @@ import './App.css';
 import { ImageViewer } from './viewers/ImageViewer';
 import { SocketStatus } from './socket/SocketStatus';
 
-const uri = 'ws://localhost:8000/ws';
-
-function App() {
-  const { data, socket } = useSocket({ uri });
-
+const App = ({data}) => {
   return (
     <Container className="app-container" fluid="xl">
       <header>
@@ -33,7 +29,7 @@ function App() {
                 <TreeLayout data={data} />
               </Col>
               <Col>
-                <ImageViewer socket={socket} />
+                <ImageViewer />
               </Col>
             </>
           ) : (
@@ -47,4 +43,10 @@ function App() {
   );
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    data: state.socket.data
+  };
+};
+
+export default connect(mapStateToProps, null)(App);

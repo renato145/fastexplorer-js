@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-const Component = ({ status }) => {
+const SocketStatusComponent = ({ status }) => {
   return (
     <div>
       <p>Socket status: {status}</p>
@@ -15,4 +15,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export const SocketStatus = connect(mapStateToProps, null)(Component);
+export const SocketStatus = connect(mapStateToProps, null)(SocketStatusComponent);

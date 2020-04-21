@@ -1,4 +1,4 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import { socket } from './socket';
+import { socketReducer } from './socketReducer';
 
-export const rootReducer = combineReducers({ socket });
+export const rootReducer = combineReducers({ socket: socketReducer });

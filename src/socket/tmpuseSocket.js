@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { connect } from 'react-redux';
-import { socketConnected } from '../reducers/socket';
+import { socketConnected } from '../reducers/socketReducer';
 
 const mapDispatch = { socketConnected };
 
@@ -37,8 +37,13 @@ const useComponent = ({ uri, socketConnected }) => {
       // setStatus('disconnected');
     };
 
+    socket.onerror = (error) => {
+      console.log('WebSocket error ' + error);
+      console.dir(error);
+    }
+
     return socket;
-  }, [uri, socketConnected]);
+  }, [uri]);
 
   return { data, socket };
 };
