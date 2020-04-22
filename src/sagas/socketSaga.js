@@ -15,7 +15,7 @@ import { createAction } from '@reduxjs/toolkit';
 
 const uri = 'ws://localhost:8000/ws';
 
-export const send_event = createAction('socket/sendEvent');
+export const send_event = createAction('socket/sendEvent', payload => ({payload: {'event': payload}}));
 
 function initWebSocket(socket) {
   return eventChannel((emit) => {
@@ -57,7 +57,6 @@ function initWebSocket(socket) {
 }
 
 function* sendEvent(socket, action) {
-  // console.log(JSON.stringify(action))
   yield socket.send(JSON.stringify(action));
 }
 

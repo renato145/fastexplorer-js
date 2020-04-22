@@ -9,7 +9,7 @@ const mapDispatch = { send_event };
 export const ImageViewerComponent = ({ send_event }) => {
   return (
     <div>
-      <Button onClick={() => send_event(serverEvents.LOAD.INPUT)}>Load Input</Button>
+      <Button onClick={() => send_event(serverEvents.LOAD_INPUT)}>Load Input</Button>
     </div>
   );
 };
