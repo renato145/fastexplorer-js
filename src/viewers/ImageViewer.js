@@ -6,12 +6,17 @@ import { serverEvents } from '../constants/serverEvents';
 
 const mapDispatch = { send_event };
 
-export const ImageViewerComponent = ({ send_event }) => {
+export const ImageViewerComponent = ({ inputImage, send_event }) => {
   return (
     <div>
+      <p>Input image: {inputImage}</p>
       <Button onClick={() => send_event(serverEvents.LOAD_INPUT)}>Load Input</Button>
     </div>
   );
 };
 
-export const ImageViewer = connect(null, mapDispatch)(ImageViewerComponent);
+const mapStateToProps = state => ({
+  inputImage: state.socket.inputImage,
+});
+
+export const ImageViewer = connect(mapStateToProps, mapDispatch)(ImageViewerComponent);
