@@ -1,16 +1,17 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { get_input } from '../sagas/socketSaga';
+import { send_event } from '../sagas/socketSaga';
+import { serverEvents } from '../constants/serverEvents';
 
-const mapDispatch = { get_input };
+const mapDispatch = { send_event };
 
-export const ImageViewerComponent = ({ get_input }) => {
+export const ImageViewerComponent = ({ send_event }) => {
   return (
     <div>
-      <Button onClick={() => get_input()}>Load Input</Button>
+      <Button onClick={() => send_event(serverEvents.LOAD.INPUT)}>Load Input</Button>
     </div>
   );
 };
 
-export const ImageViewer = connect(null, mapDispatch)(ImageViewerComponent)
+export const ImageViewer = connect(null, mapDispatch)(ImageViewerComponent);

@@ -15,10 +15,18 @@ const socketSlice = createSlice({
     },
     socketReceiveData(state, action) {
       const { data } = action.payload;
-      state.data = data;
+      state.data = JSON.parse(data);
+    },
+    socketInvalidEvent(state, action) {
+      const { type } = action.payload;
+      console.error('Type not recognized by server:', type);
     },
   },
 });
 
-export const { socketConnected, socketClosed, socketReceiveData } = socketSlice.actions;
+export const {
+  socketConnected,
+  socketClosed,
+  socketReceiveData,
+} = socketSlice.actions;
 export const socketReducer = socketSlice.reducer;

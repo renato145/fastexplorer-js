@@ -10,48 +10,42 @@ import {
 import {
   socketConnected,
   socketClosed,
-  socketReceiveData,
 } from '../reducers/socketReducer';
 import { createAction } from '@reduxjs/toolkit';
 
 const uri = 'ws://localhost:8000/ws';
 
-export const get_input = createAction('GET_INPUT');
+export const send_event = createAction('socket/sendEvent');
 
 function initWebSocket(socket) {
   return eventChannel((emit) => {
     socket.onopen = () => {
-      emit({ type: socketConnected.type });
+      emit(socketConnected());
       console.log('WebSocket connected.');
-      socket.send(JSON.stringify({ client: 'web_client' }));
+      socket.send(JSON.stringify({type:'CONNECTED' , payload: {client: 'web_client' }}));
     };
 
     socket.onmessage = (event) => {
       const msg = JSON.parse(event.data);
-      switch (msg.event) {
-        case 'representation_data':
-          console.log('data received');
-          emit({
-            type: socketReceiveData.type,
-            payload: { data: JSON.parse(msg.msg) },
-          });
-          break;
-        case 'close':
-          // closeMessage = ` (${msg.msg}).`;
-          break;
-        case 'invalid_event':
-          console.log(`Event not accepted by server: ${msg.msg}.`);
-          break;
-        default:
-          console.log(`Invalid event: ${msg.event}.`);
-      }
+      if (!msg.type) console.error('Invalid message from socket server', msg)
+      else emit(msg);
+      // console.log(msg.event)
+      // switch (msg.event) {
+      //   case 'close':
+      //     // closeMessage = ` (${msg.msg}).`;
+      //     break;
+      //   case 'invalid_event':
+      //     console.log(`Event not accepted by server: ${msg.msg}.`);
+      //     break;
+      //   default:
+      //     console.log(`Invalid event: ${msg.event}.`);
+      // }
     };
 
     socket.onclose = () => {
       console.log('WebSocket closed.');
-      emit({ type: socketClosed.type });
+      emit(socketClosed());
       emit(END);
-      // setStatus('disconnected');
     };
 
     socket.onerror = (err) => {
@@ -62,12 +56,15 @@ function initWebSocket(socket) {
   });
 }
 
-function* getInput(socket) {
-  yield socket.send(JSON.stringify({event: 'load_input'}));
+function* sendEvent(socket, action) {
+  // console.log(JSON.stringify(action))
+  yield socket.send(JSON.stringify(action));
 }
 
 function* watchClient(socket) {
-  yield all([takeLatest(get_input, getInput, socket)]);
+  yield all([
+    takeLatest(send_event, sendEvent, socket),
+  ]);
 }
 
 function* watchServer(socketChannel) {
