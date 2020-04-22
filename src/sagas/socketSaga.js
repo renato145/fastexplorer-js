@@ -28,7 +28,10 @@ function initWebSocket(socket) {
     socket.onmessage = (event) => {
       const msg = JSON.parse(event.data);
       if (!msg.type) console.error('Invalid message from socket server', msg)
-      else emit(msg);
+      else {
+        console.log('Event from WebSocket: ', msg.type);
+        emit(msg);
+      }
       // console.log(msg.event)
       // switch (msg.event) {
       //   case 'close':
