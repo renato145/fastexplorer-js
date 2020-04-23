@@ -5,7 +5,7 @@ const socketSlice = createSlice({
   initialState: {
     status: 'waiting',
     data: null,
-    inputImage: '--waiting to be load--',
+    inputImage: null,
   },
   reducers: {
     socketConnected(state) {
@@ -23,9 +23,12 @@ const socketSlice = createSlice({
       console.error('Type not recognized by server:', type);
     },
     socketReceiveImageInput(state, action) {
-      const { image }  = action.payload;
-      state.inputImage = image;
-    }
+      state.inputImage = action.payload;
+    },
+    socketServerClosed(state, action) {
+      const { msg } = action.payload;
+      console.error(msg);
+    },
   },
 });
 
