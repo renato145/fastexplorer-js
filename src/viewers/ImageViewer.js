@@ -12,20 +12,35 @@ export const ImageViewerComponent = ({ inputImage, send_event }) => {
 
   useEffect(() => {
     if (!inputImage) return;
-    urlToArray(inputImage).then(({data, shape}) => {
+    urlToArray(inputImage).then(({ data, shape }) => {
       const canvas = ref.current;
+      const [channels, height, width ] =
+        shape.length === 3 ? shape : [1, ...shape];
       const ctx = canvas.getContext('2d');
+      canvas.width = width;
+      canvas.height = height;
       const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
       const d = imageData.data;
 
-      for (let i = 0; i < d.length/4; i++) {
-        const idx = i*4;
-        // const colorValue = color(interpolateMagma(data[idx]/255));
-        const colorValue = data[i]*255;
-        d[idx] = colorValue;
-        d[idx+1] = colorValue;
-        d[idx+2] = colorValue;
-        d[idx+3] = 255;
+      if (channels === 1) {
+        for (let i = 0; i < d.length / 4; i++) {
+          const idx = i * 4;
+          // const colorValue = color(interpolateMagma(data[idx]/255)); TODO add colormap selector
+          const colorValue = data[i] * 255;
+          d[idx] = colorValue;
+          d[idx + 1] = colorValue;
+          d[idx + 2] = colorValue;
+          d[idx + 3] = 255;
+        }
+      } else {
+        const channelPixels = width * height;
+        for (let i = 0; i < d.length / 4; i++) {
+          const idx = i * 4;
+          d[idx] = data[i] * 255;
+          d[idx + 1] = data[i + channelPixels] * 255;
+          d[idx + 2] = data[i + channelPixels * 2] * 255;
+          d[idx + 3] = 255;
+        }
       }
 
       ctx.putImageData(imageData, 0, 0);
@@ -33,15 +48,25 @@ export const ImageViewerComponent = ({ inputImage, send_event }) => {
   }, [inputImage]);
 
   return (
-    <div style={{maxWidth: '300px'}}>
-      <Button variant='link' onClick={() => send_event(serverEvents.LOAD_INPUT)}>Load Input</Button>
-      <canvas ref={ref} width={28} height={28} style={{width:'100%', background:'#eee'}} />
+    <div style={{ maxWidth: '300px' }}>
+      <canvas ref={ref} style={{ width: '100%', background: '#eee' }} />
+      <p className="text-right">
+        <Button
+          variant="link"
+          onClick={() => send_event(serverEvents.LOAD_INPUT)}
+        >
+          Load Input
+        </Button>
+      </p>
     </div>
   );
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   inputImage: state.socket.inputImage,
 });
 
-export const ImageViewer = connect(mapStateToProps, mapDispatch)(ImageViewerComponent);
+export const ImageViewer = connect(
+  mapStateToProps,
+  mapDispatch
+)(ImageViewerComponent);
