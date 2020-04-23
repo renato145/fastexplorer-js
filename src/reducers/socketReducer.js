@@ -4,12 +4,14 @@ const socketSlice = createSlice({
   name: 'socket',
   initialState: {
     status: 'waiting',
+    connectedBefore: false,
     data: null,
     inputImage: null,
   },
   reducers: {
     socketConnected(state) {
       state.status = 'connected';
+      state.connectedBefore = true;
     },
     socketClosed(state) {
       state.status = 'closed';

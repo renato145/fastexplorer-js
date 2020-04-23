@@ -1,7 +1,6 @@
 import React from 'react';
-import { Alert, Button } from 'react-bootstrap';
-
-const reload = () => window.location.reload(false);
+import { Alert } from 'react-bootstrap';
+import { RefreshPageButton } from './RefreshPageButton';
 
 export const SocketFail = () => {
   return (
@@ -15,9 +14,7 @@ export const SocketFail = () => {
         </p>
         <p>
           Once you launch the server,{' '}
-          <Button variant="info" size="sm" onClick={reload}>
-            refresh
-          </Button>
+          <RefreshPageButton variant="info" size="sm" />
           {' '}this page.
         </p>
       </Alert>
