@@ -7,6 +7,7 @@ const socketSlice = createSlice({
     connectedBefore: false,
     data: null,
     inputImage: null,
+    heatmaps: [],
   },
   reducers: {
     socketConnected(state) {
@@ -26,6 +27,17 @@ const socketSlice = createSlice({
     },
     socketReceiveImageInput(state, action) {
       state.inputImage = action.payload;
+    },
+    socketNoImageHeatmap(state, action) {
+      console.error('Heatmap not valid.');
+    },
+    socketReceiveHeatmap(state, action) {
+      const { heatmapImage } = action.payload;
+      state.heatmaps.push({url: heatmapImage});
+    },
+    socketError(state, action) {
+      const { msg } = action.payload;
+      console.error('Error:', msg)
     },
     socketServerClosed(state, action) {
       const { msg } = action.payload;
