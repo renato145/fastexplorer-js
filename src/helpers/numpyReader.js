@@ -48,17 +48,8 @@ const dtypes = {
   },
 };
 
-export const npyToUrl = async (blob) => {
-  const buffer = await blob.arrayBuffer();
-  const headerLength = new DataView(buffer.slice(8, 10)).getUint8(0);
-  const offsetBytes = 10 + headerLength;
-
-  const hcontents = new TextDecoder('utf-8').decode(
-    new Uint8Array(buffer.slice(10, 10 + headerLength))
-  );
-
-  const header = JSON.parse(
-    hcontents
+const str2json = x => JSON.parse(
+    x
       .replace(/'/g, '"')
       .replace('False', 'false')
       .replace('(', '[')
@@ -67,16 +58,35 @@ export const npyToUrl = async (blob) => {
     // .replace(/,*\),*/g, ']')
   );
 
+
+export const npyToUrl = async (blob) => {
+  const buffer = await blob.arrayBuffer();
+  const payloadBuffer = buffer.slice(0, 100);
+  const npyBuffer = buffer.slice(128);
+  const headerLength = new DataView(npyBuffer.slice(8, 10)).getUint8(0);
+  const offsetBytes = 128 + 10 + headerLength;
+
+  const textDecoder = new TextDecoder('utf-8');
+
+  const payloadContents = textDecoder.decode(new Uint8Array(payloadBuffer));
+
+  const hcontents = textDecoder.decode(
+    new Uint8Array(npyBuffer.slice(10, 10 + headerLength))
+  );
+
+  const payload = str2json(payloadContents);
+  const header = str2json(hcontents);
+
   const { shape, descr } = header;
   const dataUrl = URL.createObjectURL(blob.slice(offsetBytes));
 
   return {
-    type: header.type,
+    type: payload.type,
     payload: {
       dataUrl,
       shape,
       descr,
-      i: header.i
+      ...payload
     },
   };
 };
