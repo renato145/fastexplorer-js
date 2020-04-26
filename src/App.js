@@ -6,7 +6,8 @@ import { SocketFail } from './socket/SocketFail';
 import { TreeLayout } from './treestructure/TreeLayout';
 import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
-import { ImageViewer } from './viewers/ImageViewer';
+import { ImageInput } from './viewers/ImageInput';
+import { Heatmap } from './viewers/Heatmap';
 import { SocketStatus } from './socket/SocketStatus';
 
 const App = ({data}) => {
@@ -29,7 +30,8 @@ const App = ({data}) => {
                 <TreeLayout data={data} />
               </Col>
               <Col>
-                <ImageViewer />
+                <ImageInput />
+                <Heatmap />
               </Col>
             </>
           ) : (

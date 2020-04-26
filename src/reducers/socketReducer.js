@@ -7,7 +7,8 @@ const socketSlice = createSlice({
     connectedBefore: false,
     data: null,
     inputImage: null,
-    heatmaps: [],
+    heatmap: null,
+    heatmaps: [], // TODO (multiple heatmaps)
   },
   reducers: {
     socketConnected(state) {
@@ -32,8 +33,7 @@ const socketSlice = createSlice({
       console.error('Heatmap not valid.');
     },
     socketReceiveHeatmap(state, action) {
-      const { heatmapImage } = action.payload;
-      state.heatmaps.push({url: heatmapImage});
+      state.heatmap = action.payload;
     },
     socketError(state, action) {
       const { msg } = action.payload;

@@ -1,22 +1,12 @@
 import React, { useEffect, useRef } from 'react';
-import { Button } from 'react-bootstrap';
-import { connect } from 'react-redux';
-import { send_event } from '../sagas/socketSaga';
-import { serverEvents } from '../constants/serverEvents';
 import { urlToArray } from '../helpers/numpyReader';
 
-const mapDispatch = { send_event };
-
-const mapStateToProps = (state) => ({
-  inputImage: state.socket.inputImage,
-});
-
-export const ImageViewerComponent = ({ inputImage, send_event }) => {
+export const NpyImage = ({ url }) => {
   const ref = useRef();
 
   useEffect(() => {
-    if (!inputImage) return;
-    urlToArray(inputImage).then(({ data, shape }) => {
+    if (!url) return;
+    urlToArray(url).then(({ data, shape }) => {
       const canvas = ref.current;
       const [channels, height, width ] =
         shape.length === 3 ? shape : [1, ...shape];
@@ -49,24 +39,9 @@ export const ImageViewerComponent = ({ inputImage, send_event }) => {
 
       ctx.putImageData(imageData, 0, 0);
     });
-  }, [inputImage]);
+  }, [url]);
 
   return (
-    <div style={{ maxWidth: '300px' }}>
-      <canvas ref={ref} style={{ width: '100%', background: '#eee' }} />
-      <p className="text-right">
-        <Button
-          variant="link"
-          onClick={() => send_event({event: serverEvents.LOAD_INPUT})}
-        >
-          Load Input
-        </Button>
-      </p>
-    </div>
+    <canvas ref={ref} style={{ width: '100%', background: '#eee' }} />
   );
 };
-
-export const ImageViewer = connect(
-  mapStateToProps,
-  mapDispatch
-)(ImageViewerComponent);
