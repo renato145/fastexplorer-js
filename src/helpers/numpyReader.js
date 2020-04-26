@@ -76,6 +76,7 @@ export const npyToUrl = async (blob) => {
       dataUrl,
       shape,
       descr,
+      i: header.i
     },
   };
 };

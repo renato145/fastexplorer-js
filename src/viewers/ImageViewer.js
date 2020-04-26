@@ -7,6 +7,10 @@ import { urlToArray } from '../helpers/numpyReader';
 
 const mapDispatch = { send_event };
 
+const mapStateToProps = (state) => ({
+  inputImage: state.socket.inputImage,
+});
+
 export const ImageViewerComponent = ({ inputImage, send_event }) => {
   const ref = useRef();
 
@@ -53,7 +57,7 @@ export const ImageViewerComponent = ({ inputImage, send_event }) => {
       <p className="text-right">
         <Button
           variant="link"
-          onClick={() => send_event(serverEvents.LOAD_INPUT)}
+          onClick={() => send_event({event: serverEvents.LOAD_INPUT})}
         >
           Load Input
         </Button>
@@ -61,10 +65,6 @@ export const ImageViewerComponent = ({ inputImage, send_event }) => {
     </div>
   );
 };
-
-const mapStateToProps = (state) => ({
-  inputImage: state.socket.inputImage,
-});
 
 export const ImageViewer = connect(
   mapStateToProps,

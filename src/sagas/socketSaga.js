@@ -13,9 +13,7 @@ import { npyToUrl } from '../helpers/numpyReader';
 
 const uri = 'ws://localhost:8000/ws';
 
-export const send_event = createAction('socket/sendEvent', (payload) => ({
-  payload: { event: payload },
-}));
+export const send_event = createAction('socket/sendEvent');
 
 function initWebSocket(socket) {
   return eventChannel((emit) => {

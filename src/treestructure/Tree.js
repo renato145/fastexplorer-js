@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useSpring, a } from 'react-spring';
 import { usePrevious, useDimensions } from './utils';
 import { MinusSquareO, PlusSquareO, CloseSquareO } from './icons';
+import { LayerTitle } from './LayerTitle';
 
 const Frame = styled('div')`
   position: relative;
@@ -10,10 +11,6 @@ const Frame = styled('div')`
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow-x: hidden;
-  vertical-align: middle;
-`;
-
-const Title = styled('span')`
   vertical-align: middle;
 `;
 
@@ -32,9 +29,11 @@ const toggle = {
   verticalAlign: 'middle',
 };
 
-export const Tree = memo(({ data, level }) => {
+export const Tree = memo(({ data, level, parentPath }) => {
   const { name, nodes } = data;
   const shape = data?.xtra?.shape;
+  const pathname = data?.xtra?.path;
+  const path = parentPath ? `${parentPath}/${pathname}` : pathname;
   const [isOpen, setOpen] = useState(data?.xtra?.open);
   const previous = usePrevious(isOpen);
   const { ref, height: viewHeight } = useDimensions();
@@ -54,10 +53,7 @@ export const Tree = memo(({ data, level }) => {
         style={{ ...toggle, opacity: nodes ? 1 : 0.3 }}
         onClick={() => setOpen(!isOpen)}
       />
-      <Title>
-        {name}
-        {shape ? ` [${shape.toString()}]` : ''}
-      </Title>
+      <LayerTitle name={name} shape={shape} path={path} />
       <Content
         style={{
           opacity,
@@ -70,7 +66,7 @@ export const Tree = memo(({ data, level }) => {
           children={
             nodes &&
             nodes.map((node, i) => (
-              <Tree key={i} data={node} level={level + 1} />
+              <Tree key={i} data={node} level={level + 1} parentPath={path} />
             ))
           }
         />
