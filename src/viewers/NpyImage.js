@@ -11,6 +11,7 @@ import {
   interpolateCool,
   interpolateSpectral,
   interpolatePlasma,
+  interpolateGreys,
 } from 'd3';
 
 const colors = {
@@ -21,6 +22,7 @@ const colors = {
   Cool: interpolateCool,
   Spectral: interpolateSpectral,
   Plasma: interpolatePlasma,
+  Greys: interpolateGreys,
 };
 
 const Title = styled.div`
