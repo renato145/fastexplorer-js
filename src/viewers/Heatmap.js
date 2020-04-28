@@ -7,17 +7,7 @@ const mapStateToProps = (state) => ({
 });
 
 export const HeatmapComponent = ({ heatmap }) => {
-  return (
-    <div style={{ maxWidth: '300px' }}>
-      <p className="text-center">
-        Heatmap
-      </p>
-      <NpyImage url={heatmap} />
-    </div>
-  );
+  return <NpyImage url={heatmap} title="Heatmap" />;
 };
 
-export const Heatmap = connect(
-  mapStateToProps,
-  null
-)(HeatmapComponent);
+export const Heatmap = connect(mapStateToProps, null)(HeatmapComponent);

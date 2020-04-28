@@ -13,20 +13,18 @@ const mapStateToProps = (state) => ({
 
 export const ImageInputComponent = ({ inputImage, send_event }) => {
   return (
-    <div style={{ maxWidth: '300px' }}>
-      <p className="text-center">
-        Input image
-      </p>
-      <NpyImage url={inputImage} />
-      <p className="text-right">
+    <>
+      <NpyImage url={inputImage} title="Input image" />
+      <div className="text-right">
         <Button
-          variant="link"
+          variant="primary"
+          size="sm"
           onClick={() => send_event({ event: serverEvents.LOAD_INPUT })}
         >
           Load Input
         </Button>
-      </p>
-    </div>
+      </div>
+    </>
   );
 };
 
