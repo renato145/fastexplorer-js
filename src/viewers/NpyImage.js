@@ -1,15 +1,55 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { urlToArray } from '../helpers/numpyReader';
+import styled from 'styled-components';
+import {
+  color,
+  ascending,
+  interpolateRdBu,
+  interpolateMagma,
+  interpolateInferno,
+  interpolateWarm,
+  interpolateCool,
+  interpolateSpectral,
+  interpolatePlasma,
+} from 'd3';
 
-export const NpyImage = ({ url }) => {
+const colors = {
+  Magma: interpolateMagma,
+  RdBu: interpolateRdBu,
+  Inferno: interpolateInferno,
+  Warm: interpolateWarm,
+  Cool: interpolateCool,
+  Spectral: interpolateSpectral,
+  Plasma: interpolatePlasma,
+};
+
+const Title = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.2em 0em;
+`;
+
+const CmapSelector = styled.div`
+  & > .custom-select {
+    height: auto;
+    font-size: 0.8em;
+    padding: 0rem 1.75rem 0rem 0.75rem;
+  }
+`;
+
+export const NpyImage = ({ url, title, defaultCmap = 'RdBu' }) => {
   const ref = useRef();
+  const [channels, setChannels] = useState();
+  const [cmap, setCmap] = useState(defaultCmap);
 
   useEffect(() => {
     if (!url) return;
     urlToArray(url).then(({ data, shape }) => {
       const canvas = ref.current;
-      const [channels, height, width ] =
+      const [channels, height, width] =
         shape.length === 3 ? shape : [1, ...shape];
+      setChannels(channels);
       const ctx = canvas.getContext('2d');
       canvas.width = width;
       canvas.height = height;
@@ -19,11 +59,10 @@ export const NpyImage = ({ url }) => {
       if (channels === 1) {
         for (let i = 0; i < d.length / 4; i++) {
           const idx = i * 4;
-          // const colorValue = color(interpolateMagma(data[idx]/255)); TODO add colormap selector
-          const colorValue = data[i] * 255;
-          d[idx] = colorValue;
-          d[idx + 1] = colorValue;
-          d[idx + 2] = colorValue;
+          const colorValue = color(colors[cmap](data[i]));
+          d[idx] = colorValue.r;
+          d[idx + 1] = colorValue.b;
+          d[idx + 2] = colorValue.g;
           d[idx + 3] = 255;
         }
       } else {
@@ -39,9 +78,30 @@ export const NpyImage = ({ url }) => {
 
       ctx.putImageData(imageData, 0, 0);
     });
-  }, [url]);
+  }, [url, cmap]);
 
   return (
-    <canvas ref={ref} style={{ width: '100%', background: '#eee' }} />
+    <>
+      <Title>
+        <div>{title}</div>
+        {channels === 1 && (
+          <CmapSelector>
+            {/* <label className='selection-label mb-0 ml-2'>Select heatmap layer</label> */}
+            <select
+              className="custom-select"
+              defaultValue={cmap}
+              onChange={(e) => setCmap(e.target.value)}
+            >
+              {Object.keys(colors).sort(ascending).map((d) => (
+                <option key={d} value={d}>
+                  {d}
+                </option>
+              ))}
+            </select>
+          </CmapSelector>
+        )}
+      </Title>
+      <canvas ref={ref} style={{ width: '100%', background: '#eee' }} />
+    </>
   );
 };
