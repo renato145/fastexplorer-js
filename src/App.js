@@ -10,7 +10,7 @@ import { ImageInput } from './viewers/ImageInput';
 import { Heatmap } from './viewers/Heatmap';
 import { SocketStatus } from './socket/SocketStatus';
 
-const App = ({data}) => {
+const App = ({ data }) => {
   return (
     <Container className="app-container" fluid="xl">
       <header>
@@ -30,8 +30,14 @@ const App = ({data}) => {
                 <TreeLayout data={data} />
               </Col>
               <Col>
-                <ImageInput />
-                <Heatmap />
+                <Row>
+                  <Col md={6}>
+                    <ImageInput />
+                  </Col>
+                  <Col md={6}>
+                    <Heatmap />
+                  </Col>
+                </Row>
               </Col>
             </>
           ) : (
@@ -43,11 +49,11 @@ const App = ({data}) => {
       <Footer url="fastexplorer-js" />
     </Container>
   );
-}
+};
 
 const mapStateToProps = (state) => {
   return {
-    data: state.socket.data
+    data: state.socket.data,
   };
 };
 
