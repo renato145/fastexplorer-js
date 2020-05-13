@@ -1,20 +1,30 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  useLocation
+} from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import { Footer } from './Footer';
-import { SocketFail } from './socket/SocketFail';
-import { TreeLayout } from './treestructure/TreeLayout';
+import { SocketStatus } from './socket/SocketStatus';
+import { Navigation } from './Navigation';
+import { MainView } from './MainView';
+import { LossLandscape } from './viewers/LossLandscape';
 import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
-import { ImageInput } from './viewers/ImageInput';
-import { Heatmap } from './viewers/Heatmap';
-import { SocketStatus } from './socket/SocketStatus';
 
-const App = ({ data }) => {
+export const BASE_URL = 'fastexplorer-js';
+
+const AppContent = () => {
+  const location = useLocation();
+  const isHome = location.pathname.replace(/\//g, "") === BASE_URL;
+
   return (
     <Container className="app-container" fluid="xl">
       <header>
-        <h1 className="mt-4 mb-4">Fast Explorer</h1>
+        <Navigation />
+        { isHome && <h1 className="mt-4 mb-4">FastExplorer</h1>}
       </header>
 
       <main>
@@ -24,25 +34,14 @@ const App = ({ data }) => {
           </Col>
         </Row>
         <Row className="justify-content-md-center">
-          {data ? (
-            <>
-              <Col sm="auto">
-                <TreeLayout data={data} />
-              </Col>
-              <Col>
-                <Row>
-                  <Col md={6}>
-                    <ImageInput />
-                  </Col>
-                  <Col md={6}>
-                    <Heatmap />
-                  </Col>
-                </Row>
-              </Col>
-            </>
-          ) : (
-            <SocketFail />
-          )}
+          <Switch>
+            <Route exact path={`/${BASE_URL}/`}>
+              <MainView />
+            </Route>
+            <Route path={`/${BASE_URL}/loss_landscape`}>
+              <LossLandscape />
+            </Route>
+          </Switch>
         </Row>
       </main>
 
@@ -51,10 +50,8 @@ const App = ({ data }) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    data: state.socket.data,
-  };
-};
-
-export default connect(mapStateToProps, null)(App);
+export const App = () => (
+  <Router>
+    <AppContent />
+  </Router>
+);

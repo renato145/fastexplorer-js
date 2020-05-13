@@ -35,6 +35,9 @@ const socketSlice = createSlice({
     socketReceiveHeatmap(state, action) {
       state.heatmap = action.payload;
     },
+    socketReceiveLossLandscape(state, action) {
+      console.log('landscape');
+    },
     socketError(state, action) {
       const { msg } = action.payload;
       console.error('Error:', msg)

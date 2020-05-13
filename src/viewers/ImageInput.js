@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from 'react-bootstrap';
+import { Button } from '../components/Button';
 import { connect } from 'react-redux';
 import { send_event } from '../sagas/socketSaga';
 import { serverEvents } from '../constants/serverEvents';
@@ -16,9 +16,8 @@ export const ImageInputComponent = ({ inputImage, send_event }) => {
     <>
       <NpyImage url={inputImage} title="Input image" />
       <div className="text-right">
+
         <Button
-          variant="primary"
-          size="sm"
           onClick={() => send_event({ event: serverEvents.LOAD_INPUT })}
         >
           Load Input
