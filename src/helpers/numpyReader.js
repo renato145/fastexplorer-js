@@ -48,15 +48,18 @@ const dtypes = {
   },
 };
 
-const str2json = x => JSON.parse(
+const str2json = x => {
+  return JSON.parse(
     x
       .replace(/'/g, '"')
       .replace('False', 'false')
       .replace('(', '[')
       .replace(')', ']')
       .replace(', }', '}')
+      .replace(',]', ']')
     // .replace(/,*\),*/g, ']')
   );
+};
 
 
 export const npyToUrl = async (blob) => {

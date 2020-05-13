@@ -9,6 +9,7 @@ const socketSlice = createSlice({
     inputImage: null,
     heatmap: null,
     heatmaps: [], // TODO (multiple heatmaps)
+    lossLandscape: null, // TODO (lock on server loading)
   },
   reducers: {
     socketConnected(state) {
@@ -36,7 +37,7 @@ const socketSlice = createSlice({
       state.heatmap = action.payload;
     },
     socketReceiveLossLandscape(state, action) {
-      console.log('landscape');
+      state.lossLandscape = action.payload;
     },
     socketError(state, action) {
       const { msg } = action.payload;
