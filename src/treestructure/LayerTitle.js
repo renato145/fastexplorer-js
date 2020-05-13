@@ -8,6 +8,7 @@ const mapDispatch = { send_event };
 
 const Title = styled('span')`
   vertical-align: middle;
+  cursor: zoom-in;
 `;
 
 const LayerTitleComponent = ({ name, shape, path, send_event }) => {
