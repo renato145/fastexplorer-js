@@ -6,7 +6,7 @@ const Container = styled.div`
   height: 75vh;
   min-height: 300px;
   width: 100%;
-  background-color: #ddd;
+  background-color: #000;
   & canvas:focus {
     outline-width: 0px;
   }
