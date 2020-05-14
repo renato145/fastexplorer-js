@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  BrowserRouter as Router,
+  HashRouter,
   Route,
   Switch,
   useLocation
@@ -14,11 +14,9 @@ import { LossLandscape } from './viewers/LossLandscape';
 import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
 
-export const BASE_URL = 'fastexplorer-js';
-
 const AppContent = () => {
   const location = useLocation();
-  const isHome = location.pathname.replace(/\//g, "") === BASE_URL;
+  const isHome = location.pathname === '/';
 
   return (
     <Container className="app-container" fluid="xl">
@@ -35,10 +33,10 @@ const AppContent = () => {
         </Row>
         <Row className="justify-content-md-center">
           <Switch>
-            <Route exact path={`/${BASE_URL}/`}>
+            <Route exact path={`/`}>
               <MainView />
             </Route>
-            <Route path={`/${BASE_URL}/loss_landscape`}>
+            <Route path={`/loss_landscape`}>
               <LossLandscape />
             </Route>
           </Switch>
@@ -51,7 +49,7 @@ const AppContent = () => {
 };
 
 export const App = () => (
-  <Router>
+  <HashRouter basename='/'>
     <AppContent />
-  </Router>
+  </HashRouter>
 );

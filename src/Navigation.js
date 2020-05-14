@@ -2,7 +2,6 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Navbar, Nav } from 'react-bootstrap';
 import styled from 'styled-components';
-import { BASE_URL } from './App';
 
 const Link = styled(NavLink).attrs((props) => ({
   exact: true,
@@ -16,10 +15,10 @@ export const Navigation = () => {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
-          <Link to={`/${BASE_URL}`}>
+          <Link to={`/`}>
             Home
           </Link>
-          <Link to={`/${BASE_URL}/loss_landscape`}>
+          <Link to={`/loss_landscape`}>
             Loss Landscape
           </Link>
         </Nav>
