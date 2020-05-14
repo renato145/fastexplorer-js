@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useMemo } from 'react';
+import React, { useRef, useEffect, useMemo } from 'react';
 import useMeasure from 'react-use-measure';
 import { useFrame } from 'react-three-fiber';
 import { DoubleSide } from 'three';
@@ -15,59 +15,67 @@ import { urlToArray } from '../helpers/numpyReader';
 const mapDispatch = { send_event };
 
 const mapStateToProps = (state) => ({
-  dataUrl: state.socket.lossLandscape,
+  data: state.socket.lossLandscape,
 });
 
-const Mesh = ({ dataUrl }) => {
+const Mesh = ({ data }) => {
   const meshRef = useRef();
   const planeRef = useRef();
 
-  useEffect(() => {
-    if (!dataUrl) return;
-    const plane = planeRef.current;
-    urlToArray(dataUrl).then(({ data, shape }) => {
-      data.forEach((o,i) => {
-        plane.vertices[i].z = o/10000;
-      });
-      plane.verticesNeedUpdate = true;
-    });
-  }, [dataUrl]);
-
   const shaderData = useMemo(() => {
-    const vertexShader = /* glsl */`
-  varying float z;
+    const vertexShader = /* glsl */ `
+  varying vec3 pos;
 
   void main() {
-    vec3 pos = position;
-    // pos.z = min(pos.z, 2.0);
-    z = pos.z;
+    pos = position;
     gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
   }
 `;
 
-    const fragmentShader = /* glsl */`
-  varying float z;
-  
+    const fragmentShader = /* glsl */ `
+  varying vec3 pos;
+
   void main() {
-    vec4 col = vec4(z, 0.1, 0.3, 1.0);
-    col.a = smoothstep(1.0, 0.0, clamp(z, 0.0, 1.2));
-    col.a = smoothstep(0.0, 1.0, clamp(z, 0.0, 1.2));
+    vec4 col = vec4(0.0, 0.1, 0.3, 1.0);
+    col.r = max(0.0, (1.0 - pos.z/2.0)) * (1.0 - distance(pos.xy, vec2(0.0))/10.0);
     gl_FragColor = col;
   }
 `;
 
-    return { vertexShader, fragmentShader };
+    const uniforms = {
+      // u_maxz: { value: 1 },
+    };
+
+    return { vertexShader, fragmentShader, uniforms };
   }, []);
 
-  useFrame(() => (meshRef.current.rotation.z += 0.005));
+  useEffect(() => {
+    if (!data) return;
+    const plane = planeRef.current;
+    const max_z = data.max_z ?? 1;
+    urlToArray(data).then(({ data, shape }) => {
+      data.forEach((o, i) => {
+        plane.vertices[i].z = o / max_z;
+      });
+      plane.verticesNeedUpdate = true;
+    });
+    // shaderData.uniforms.u_maxz.value = max_z;
+  }, [data, shaderData]);
+
+  // useFrame(() => (meshRef.current.rotation.z += 0.005));
 
   return (
     <mesh ref={meshRef} rotation-x={-Math.PI / 2.1} position-y={-1.5}>
       <planeGeometry ref={planeRef} attach="geometry" args={[5, 5, 100, 100]} />
-      <shaderMaterial attach="material" {...shaderData} side={DoubleSide}  />
-      {/* <meshLambertMaterial
+      <shaderMaterial
         attach="material"
-        color='hotpink'
+        {...shaderData}
+        side={DoubleSide}
+        // wireframe
+      />
+      {/* <meshNormalMaterial
+        attach="material"
+        // {...shaderData}
         side={DoubleSide}
         // wireframe
       /> */}
@@ -76,7 +84,7 @@ const Mesh = ({ dataUrl }) => {
   );
 };
 
-export const LossLandscapeComponent = ({ dataUrl, send_event }) => {
+export const LossLandscapeComponent = ({ data, send_event }) => {
   const [ref, bounds] = useMeasure({ polyfill: ResizeObserver });
 
   return (
@@ -84,7 +92,7 @@ export const LossLandscapeComponent = ({ dataUrl, send_event }) => {
       <CanvasContainer measure={ref}>
         <ambientLight />
         <pointLight position={[10, 10, 10]} />
-        <Mesh bounds={bounds} dataUrl={dataUrl} />
+        <Mesh bounds={bounds} data={data} />
       </CanvasContainer>
       <div className="text-right mt-2 mr-2">
         <Button
