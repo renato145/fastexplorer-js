@@ -8,7 +8,7 @@ const SocketStatusComponent = ({ status, connectedBefore }) => {
       <p>
         Socket status: {status}{' '}
         {status === 'closed' && connectedBefore && (
-          <RefreshPageButton variant="info" size="sm" />
+          <RefreshPageButton />
         )}
       </p>
     </div>

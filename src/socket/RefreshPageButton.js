@@ -1,11 +1,11 @@
 import React from 'react';
-import { Button } from 'react-bootstrap';
+import { Button } from '../components/Button';
 
 const reload = () => window.location.reload(false);
 
-export const RefreshPageButton = ({variant, size, text='refresh'}) => {
+export const RefreshPageButton = ({ text = 'refresh' }) => {
   return (
-    <Button variant={variant} size={size} onClick={reload}>
+    <Button color="tw-bg-teal-500" colorHover="tw-bg-teal-700" onClick={reload}>
       {text}
     </Button>
   );
