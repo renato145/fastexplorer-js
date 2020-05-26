@@ -23,7 +23,7 @@ const AppContent = () => {
     <Container className="app-container" fluid="xl">
       <header>
         <Navigation />
-        { isHome && <h1 className="tw-mt-4 tw-mb-4 tw-text-gray-900">FastExplorer</h1>}
+        { isHome && <h1 className="tw-my-4 tw-text-gray-900 tw-text-4xl tw-font-bold">FastExplorer</h1>}
       </header>
 
       <main>
