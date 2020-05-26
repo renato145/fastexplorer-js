@@ -32,6 +32,14 @@ const Title = styled.div`
   padding: 0.2em 0em;
 `;
 
+const CmapSelector = styled.div`
+  & > .custom-select {
+    height: auto;
+    font-size: 0.8em;
+    padding: 0rem 1.75rem 0rem 0.75rem;
+  }
+`;
+
 export const NpyImage = ({ url, title, defaultCmap = 'RdBu' }) => {
   const ref = useRef();
   const [channels, setChannels] = useState();
@@ -77,21 +85,22 @@ export const NpyImage = ({ url, title, defaultCmap = 'RdBu' }) => {
   return (
     <>
       <Title>
-        <div className="tw-ml-1 tw-font-medium tw-text-gray-900">{title}</div>
+        <div>{title}</div>
         {channels === 1 && (
-          <div>
+          <CmapSelector>
+            {/* <label className='selection-label mb-0 ml-2'>Select heatmap layer</label> */}
             <select
-              className="tw-px-2 tw-h-auto tw-text-xs tw-bg-white tw-border-gray-400 tw-border tw-rounded-sm focus:tw-outline-none"
+              className="custom-select"
               defaultValue={cmap}
               onChange={(e) => setCmap(e.target.value)}
             >
               {Object.keys(colors).sort(ascending).map((d) => (
-                <option key={d} value={d} className="tw-py-2">
+                <option key={d} value={d}>
                   {d}
                 </option>
               ))}
             </select>
-          </div>
+          </CmapSelector>
         )}
       </Title>
       <canvas ref={ref} style={{ width: '100%', background: '#eee' }} />

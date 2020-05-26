@@ -1,39 +1,40 @@
 import React from 'react';
+import { Nav } from 'react-bootstrap';
 
 export const Footer = ({ url }) => {
   const mail = 'renato.hermoza@pucp.edu.pe';
   const social = 'renato145';
 
   return (
-    <footer className="tw-w-full tw-mt-10">
-      <p className="tw-text-gray-600 tw-pl-4 tw-mb-0 tw-text-sm">
+    <footer style={{ width: '100%' }} className="mt-3">
+      <p style={{ color: '#6c757d', paddingLeft: '1rem', marginBottom: '0rem', fontSize: '0.9rem' }}>
         Made by: Renato Hermoza, check the{' '}
         <a href={`https://github.com/renato145/${url}`} target="_black">
           source code
         </a>
         .
       </p>
-      <hr className="tw-mt-2" />
-      <div className="tw-flex tw-flex-wrap tw-justify-center">
-        <div className="tw-px-4">
-          <a href={`mailto:${mail}`}>{mail}</a>
-        </div>
-        <div className="tw-px-4">
-          <a href={`https://twitter.com/${social.twitter}`} target="_black">
+      <hr className="mt-2" />
+      <Nav className="justify-content-center">
+        <Nav.Item>
+          <Nav.Link href={`mailto:${mail}`}>{mail}</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link href={`https://twitter.com/${social}`} target="_black">
             Twitter
-          </a>
-        </div>
-        <div className="tw-px-4">
-          <a href={`https://github.com/${social.github}`} target="_black">
+          </Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link href={`https://github.com/${social}`} target="_black">
             GitHub
-          </a>
-        </div>
-        <div className="tw-px-4">
-          <a href={`https://${social}.github.io`} target="_black">
+          </Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link href={`https://${social}.github.io`} target="_black">
             Blog
-          </a>
-        </div>
-      </div>
+          </Nav.Link>
+        </Nav.Item>
+      </Nav>
     </footer>
   );
 };

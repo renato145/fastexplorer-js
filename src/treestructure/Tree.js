@@ -50,7 +50,6 @@ export const Tree = memo(({ data, level, parentPath }) => {
   return (
     <Frame>
       <Icon
-        className="tw-inline-block"
         style={{ ...toggle, opacity: nodes ? 1 : 0.3 }}
         onClick={() => setOpen(!isOpen)}
       />

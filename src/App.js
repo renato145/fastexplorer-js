@@ -11,7 +11,6 @@ import { SocketStatus } from './socket/SocketStatus';
 import { Navigation } from './Navigation';
 import { MainView } from './MainView';
 import { LossLandscape } from './viewers/LossLandscape';
-import './index.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
 
@@ -23,7 +22,7 @@ const AppContent = () => {
     <Container className="app-container" fluid="xl">
       <header>
         <Navigation />
-        { isHome && <h1 className="tw-mt-4 tw-mb-4 tw-text-gray-900">FastExplorer</h1>}
+        { isHome && <h1 className="mt-4 mb-4">FastExplorer</h1>}
       </header>
 
       <main>

@@ -15,7 +15,8 @@ export const ImageInputComponent = ({ inputImage, send_event }) => {
   return (
     <>
       <NpyImage url={inputImage} title="Input image" />
-      <div className="tw-text-right tw-mt-1 tw-mr-1">
+      <div className="text-right">
+
         <Button
           onClick={() => send_event({ event: serverEvents.LOAD_INPUT })}
         >
