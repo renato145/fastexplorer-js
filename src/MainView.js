@@ -18,10 +18,10 @@ const MainViewComponent = ({ data }) => {
         <TreeLayout data={data} />
       </div>
       <div className="flex flex-wrap flex-auto md:flex-1">
-        <ViewImage tw="sm:mr-3 md:mr-0 lg:mr-3">
+        <ViewImage>
           <ImageInput />
         </ViewImage>
-        <ViewImage>
+        <ViewImage tw="sm:ml-3 md:ml-0 lg:ml-3">
           <Heatmap />
         </ViewImage>
       </div>

@@ -6,7 +6,7 @@ export const Footer = ({ url }) => {
 
   return (
     <footer className="w-full mt-10">
-      <p className="text-gray-600 pl-4 mb-0 text-sm">
+      <p className="text-gray-600 pl-4 text-sm">
         Made by: Renato Hermoza, check the{' '}
         <a href={`https://github.com/renato145/${url}`} target="_black">
           source code
