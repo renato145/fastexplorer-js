@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/fastexplorer-js/static/css/main.d9b54119.chunk.css",
-    "main.js": "/fastexplorer-js/static/js/main.b74b6095.chunk.js",
-    "main.js.map": "/fastexplorer-js/static/js/main.b74b6095.chunk.js.map",
+    "main.css": "/fastexplorer-js/static/css/main.5ebdc76c.chunk.css",
+    "main.js": "/fastexplorer-js/static/js/main.4fecb81e.chunk.js",
+    "main.js.map": "/fastexplorer-js/static/js/main.4fecb81e.chunk.js.map",
     "runtime-main.js": "/fastexplorer-js/static/js/runtime-main.e5a7a263.js",
     "runtime-main.js.map": "/fastexplorer-js/static/js/runtime-main.e5a7a263.js.map",
     "static/js/2.99d9b0cf.chunk.js": "/fastexplorer-js/static/js/2.99d9b0cf.chunk.js",
     "static/js/2.99d9b0cf.chunk.js.map": "/fastexplorer-js/static/js/2.99d9b0cf.chunk.js.map",
     "index.html": "/fastexplorer-js/index.html",
-    "precache-manifest.f8537ec94750d32c51fee704a3b7b6da.js": "/fastexplorer-js/precache-manifest.f8537ec94750d32c51fee704a3b7b6da.js",
+    "precache-manifest.67dcbd79d7187cd599ef15b6f90627fa.js": "/fastexplorer-js/precache-manifest.67dcbd79d7187cd599ef15b6f90627fa.js",
     "service-worker.js": "/fastexplorer-js/service-worker.js",
-    "static/css/main.d9b54119.chunk.css.map": "/fastexplorer-js/static/css/main.d9b54119.chunk.css.map",
+    "static/css/main.5ebdc76c.chunk.css.map": "/fastexplorer-js/static/css/main.5ebdc76c.chunk.css.map",
     "static/js/2.99d9b0cf.chunk.js.LICENSE.txt": "/fastexplorer-js/static/js/2.99d9b0cf.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.e5a7a263.js",
     "static/js/2.99d9b0cf.chunk.js",
-    "static/css/main.d9b54119.chunk.css",
-    "static/js/main.b74b6095.chunk.js"
+    "static/css/main.5ebdc76c.chunk.css",
+    "static/js/main.4fecb81e.chunk.js"
   ]
 }
