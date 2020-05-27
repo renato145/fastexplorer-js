@@ -1,28 +1,31 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Row, Col } from 'react-bootstrap';
 import { SocketFail } from './socket/SocketFail';
 import { TreeLayout } from './treestructure/TreeLayout';
 import { ImageInput } from './viewers/ImageInput';
 import { Heatmap } from './viewers/Heatmap';
 
+const ViewImage = ({children, tw, ...props}) => (
+  <div className={`w-full flex-auto sm:flex-1 md:flex-auto lg:flex-1 max-w-sm lg:max-w-md ${tw}`} {...props}>
+    {children}
+  </div>
+);
+
 const MainViewComponent = ({ data }) => {
   return data ? (
-    <>
-      <Col sm="auto">
+    <div className="flex flex-wrap justify-start">
+      <div className="flex-none">
         <TreeLayout data={data} />
-      </Col>
-      <Col>
-        <Row>
-          <Col md={6}>
-            <ImageInput />
-          </Col>
-          <Col md={6}>
-            <Heatmap />
-          </Col>
-        </Row>
-      </Col>
-    </>
+      </div>
+      <div className="flex flex-wrap flex-auto md:flex-1">
+        <ViewImage tw="sm:mr-3 md:mr-0 lg:mr-3">
+          <ImageInput />
+        </ViewImage>
+        <ViewImage>
+          <Heatmap />
+        </ViewImage>
+      </div>
+    </div>
   ) : (
     <SocketFail />
   );

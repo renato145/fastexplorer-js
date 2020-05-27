@@ -1,5 +1,4 @@
 import React from 'react';
-import { Button } from '../components/Button';
 import { connect } from 'react-redux';
 import { send_event } from '../sagas/socketSaga';
 import { serverEvents } from '../constants/serverEvents';
@@ -15,12 +14,13 @@ export const ImageInputComponent = ({ inputImage, send_event }) => {
   return (
     <>
       <NpyImage url={inputImage} title="Input image" />
-      <div className="tw-text-right tw-mt-1 tw-mr-1">
-        <Button
+      <div className="text-right mt-1 mr-1">
+        <button
+          className="text-sm"
           onClick={() => send_event({ event: serverEvents.LOAD_INPUT })}
         >
           Load Input
-        </Button>
+        </button>
       </div>
     </>
   );

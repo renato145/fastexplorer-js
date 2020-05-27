@@ -77,16 +77,16 @@ export const NpyImage = ({ url, title, defaultCmap = 'RdBu' }) => {
   return (
     <>
       <Title>
-        <div className="tw-ml-1 tw-font-medium tw-text-gray-900">{title}</div>
+        <div className="ml-1 font-medium text-gray-900">{title}</div>
         {channels === 1 && (
           <div>
             <select
-              className="tw-px-2 tw-h-auto tw-text-xs tw-bg-white tw-border-gray-400 tw-border tw-rounded-sm focus:tw-outline-none"
+              className="px-2 h-auto text-xs bg-white border-gray-400 border rounded-sm focus:outline-none"
               defaultValue={cmap}
               onChange={(e) => setCmap(e.target.value)}
             >
               {Object.keys(colors).sort(ascending).map((d) => (
-                <option key={d} value={d} className="tw-py-2">
+                <option key={d} value={d} className="py-2">
                   {d}
                 </option>
               ))}

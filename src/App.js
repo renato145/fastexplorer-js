@@ -1,38 +1,28 @@
 import React from 'react';
-import {
-  HashRouter,
-  Route,
-  Switch,
-  useLocation
-} from 'react-router-dom';
-import { Container, Row, Col } from 'react-bootstrap';
+import { HashRouter, Route, Switch, useLocation } from 'react-router-dom';
 import { Footer } from './Footer';
 import { SocketStatus } from './socket/SocketStatus';
 import { Navigation } from './Navigation';
 import { MainView } from './MainView';
 import { LossLandscape } from './viewers/LossLandscape';
 import './index.css';
-import 'bootstrap/dist/css/bootstrap.css';
-import './App.css';
 
 const AppContent = () => {
   const location = useLocation();
   const isHome = location.pathname === '/';
 
   return (
-    <Container className="app-container" fluid="xl">
+    <div className="w-full px-4">
       <header>
         <Navigation />
-        { isHome && <h1 className="tw-my-4 tw-text-gray-900 tw-text-4xl tw-font-bold">FastExplorer</h1>}
       </header>
 
-      <main>
-        <Row>
-          <Col>
-            <SocketStatus />
-          </Col>
-        </Row>
-        <Row className="justify-content-md-center">
+      <main className="px-2 mt-2">
+        {isHome && <h1 className="text-gray-900">FastExplorer</h1>}
+        <div>
+          <SocketStatus />
+        </div>
+        <div className="mt-2">
           <Switch>
             <Route exact path={`/`}>
               <MainView />
@@ -41,16 +31,16 @@ const AppContent = () => {
               <LossLandscape />
             </Route>
           </Switch>
-        </Row>
+        </div>
       </main>
 
       <Footer url="fastexplorer-js" />
-    </Container>
+    </div>
   );
 };
 
 export const App = () => (
-  <HashRouter basename='/'>
+  <HashRouter basename="/">
     <AppContent />
   </HashRouter>
 );

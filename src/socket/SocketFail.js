@@ -4,13 +4,13 @@ import { RefreshPageButton } from './RefreshPageButton';
 export const SocketFail = () => {
   return (
     <div
-      className="tw-mx-4 tw-bg-teal-100 tw-border-t-4 tw-border-teal-500 tw-rounded-b tw-text-teal-800 tw-px-4 tw-py-3 tw-shadow-md"
+      className="max-w-screen-md mx-4 bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-800 px-4 py-3 shadow"
       role="alert"
     >
-      <div className="tw-flex">
-        <div className="tw-py-1">
+      <div className="flex">
+        <div className="py-1">
           <svg
-            className="tw-fill-current tw-h-6 tw-w-6 tw-text-teal-500 tw-mr-4"
+            className="fill-current h-6 w-6 md:h-8 md:w-8 xl:h-10 xl:w-10 text-teal-500 mr-4"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
           >
@@ -18,7 +18,7 @@ export const SocketFail = () => {
           </svg>
         </div>
         <div>
-          <p className="tw-font-bold tw-text-lg">Socket is not connected</p>
+          <p className="font-bold text-lg md:text-xl xl:text-2xl">Socket is not connected</p>
           <p>
             This utility is helps you visualize information about{' '}
             <a href="https://dev.fast.ai/">fastai2</a> models. To use this, you
@@ -26,9 +26,9 @@ export const SocketFail = () => {
             <a href="https://renato145.github.io/fastexplorer/">fastexplorer</a>
             .
           </p>
-          <p>
+          <p className="mt-1">
             Once you launch the server,{' '}
-            <RefreshPageButton variant="info" size="sm" /> this page.
+            <RefreshPageButton tw="bg-teal-500 hover:bg-teal-400 active:bg-teal-700" /> this page.
           </p>
         </div>
       </div>

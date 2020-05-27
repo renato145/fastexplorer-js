@@ -4,4 +4,8 @@ export const serverEvents = {
   GET_LOSS_LANDSCAPE: 'GET_LOSS_LANDSCAPE',
 }
 
-// TODO: connection status constants
+export const socketStatus = {
+  WAITING: 'waiting',
+  CONNECTED: 'connected',
+  CLOSED: 'closed',
+}

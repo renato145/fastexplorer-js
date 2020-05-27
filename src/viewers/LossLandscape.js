@@ -1,14 +1,9 @@
 import React, { useRef, useEffect, useMemo } from 'react';
-import useMeasure from 'react-use-measure';
-import { useFrame } from 'react-three-fiber';
 import { DoubleSide } from 'three';
-import { ResizeObserver } from '@juggle/resize-observer';
 import { connect } from 'react-redux';
 import { send_event } from '../sagas/socketSaga';
 import { serverEvents } from '../constants/serverEvents';
 import { CanvasContainer } from './CanvasContainer';
-import { Button } from '../components/Button';
-import { Col } from 'react-bootstrap';
 import { OrbitControls } from 'drei';
 import { urlToArray } from '../helpers/numpyReader';
 
@@ -85,23 +80,21 @@ const Mesh = ({ data }) => {
 };
 
 export const LossLandscapeComponent = ({ data, send_event }) => {
-  const [ref, bounds] = useMeasure({ polyfill: ResizeObserver });
-
   return (
-    <Col>
-      <CanvasContainer measure={ref}>
+    <div>
+      <CanvasContainer>
         <ambientLight />
         <pointLight position={[10, 10, 10]} />
-        <Mesh bounds={bounds} data={data} />
+        <Mesh data={data} />
       </CanvasContainer>
       <div className="text-right mt-2 mr-2">
-        <Button
+        <button
           onClick={() => send_event({ event: serverEvents.GET_LOSS_LANDSCAPE })}
         >
           Load landscape
-        </Button>
+        </button>
       </div>
-    </Col>
+    </div>
   );
 };
 

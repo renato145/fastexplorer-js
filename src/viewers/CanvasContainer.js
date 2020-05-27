@@ -12,9 +12,9 @@ const Container = styled.div`
   }
 `;
 
-export const CanvasContainer = ({ children, measure, ...props }) => {
+export const CanvasContainer = ({ children, ...props }) => {
   return (
-    <Container ref={measure} {...props}>
+    <Container {...props}>
       <Canvas>
         {children}
       </Canvas>

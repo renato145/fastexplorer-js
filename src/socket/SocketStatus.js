@@ -1,16 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { RefreshPageButton } from './RefreshPageButton';
+import { socketStatus } from '../constants/serverEvents';
+
+const socketClasses = {
+  [socketStatus.WAITING]: 'text-blue-600',
+  [socketStatus.CONNECTED]: 'text-green-600',
+  [socketStatus.CLOSED]: 'text-red-600',
+};
 
 const SocketStatusComponent = ({ status, connectedBefore }) => {
   return (
     <div>
-      <p>
-        Socket status: {status}{' '}
-        {status === 'closed' && connectedBefore && (
-          <RefreshPageButton />
-        )}
+      <p className="font-mono text-sm text-gray-800 font-semibold inline">
+        Socket status: <span className={socketClasses[status]}>{status}</span>{' '}
       </p>
+      {status === 'closed' && connectedBefore && <RefreshPageButton />}
     </div>
   );
 };

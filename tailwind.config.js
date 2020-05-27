@@ -1,11 +1,13 @@
 module.exports = {
-  prefix: 'tw-',
+  // prefix: 'tw-',
   purge: [
     './src/**/*.js'
   ],
   theme: {
     extend: {},
   },
-  variants: {},
+  variants: {
+    backgroundColor: ['responsive', 'hover', 'focus', 'active'],
+  },
   plugins: [],
 }

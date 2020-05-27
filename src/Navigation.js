@@ -1,28 +1,21 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { Navbar, Nav } from 'react-bootstrap';
-import styled from 'styled-components';
 
-const Link = styled(NavLink).attrs((props) => ({
-  exact: true,
-  className: 'nav-link',
-  activeClassName: 'active',
-}))``;
+const HeaderLink = ( {children , ...props} ) => (
+  <NavLink exact={true} className="mr-6 text-gray-600 hover:text-gray-800" activeClassName="text-lg font-bold" {...props}>
+    {children}
+  </NavLink>
+);
 
 export const Navigation = () => {
   return (
-    <Navbar collapseOnSelect bg="light" expand="lg">
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="mr-auto">
-          <Link to={`/`}>
-            Home
-          </Link>
-          <Link to={`/loss_landscape`}>
-            Loss Landscape
-          </Link>
-        </Nav>
-      </Navbar.Collapse>
-    </Navbar>
+    <nav className="flex flex-wrap items-center px-6 py-3 bg-gray-200">
+      <HeaderLink to={`/`}>
+        Home
+      </HeaderLink>
+      <HeaderLink to={`/loss_landscape`}>
+        Loss Landscape
+      </HeaderLink>
+    </nav>
   );
 };
