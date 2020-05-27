@@ -12,7 +12,7 @@ const AppContent = () => {
   const isHome = location.pathname === '/';
 
   return (
-    <div className="w-auto mx-4 pb-2 shadow-md">
+    <div className="w-auto md:mx-4 pb-2 bg-white shadow-md">
       <header>
         <Navigation />
       </header>
@@ -33,7 +33,6 @@ const AppContent = () => {
           </Switch>
         </div>
       </main>
-
       <Footer url="fastexplorer-js" />
     </div>
   );

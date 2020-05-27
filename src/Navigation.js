@@ -9,7 +9,7 @@ const HeaderLink = ( {children , ...props} ) => (
 
 export const Navigation = () => {
   return (
-    <nav className="flex flex-wrap items-center px-6 py-3 bg-gray-200">
+    <nav className="flex flex-wrap items-center px-6 py-3 bg-gray-300">
       <HeaderLink to={`/`}>
         Home
       </HeaderLink>
