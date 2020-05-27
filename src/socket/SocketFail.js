@@ -20,7 +20,7 @@ export const SocketFail = () => {
         <div>
           <p className="font-bold text-lg md:text-xl xl:text-2xl">Socket is not connected</p>
           <p>
-            This utility is helps you visualize information about{' '}
+            This utility helps you visualize information about{' '}
             <a href="https://dev.fast.ai/">fastai2</a> models. To use this, you
             need to launch the server in python via{' '}
             <a href="https://renato145.github.io/fastexplorer/">fastexplorer</a>
