@@ -13,7 +13,7 @@ export const Footer = ({ url }) => {
         </a>
         .
       </p>
-      <hr className="my-2" />
+      <hr className="m-2" />
       <div className="flex flex-wrap justify-center">
         <div className="px-4">
           <a href={`mailto:${mail}`}>{mail}</a>

@@ -12,7 +12,7 @@ const AppContent = () => {
   const isHome = location.pathname === '/';
 
   return (
-    <div className="w-full px-4">
+    <div className="w-auto mx-4 pb-2 shadow-md">
       <header>
         <Navigation />
       </header>
